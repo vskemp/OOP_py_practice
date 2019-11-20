@@ -38,6 +38,7 @@ class Hero(Character):
         self.health = 10
         self.power = 5
         self.coins = 5
+        self.inventory = []
 
 class Goblin(Character):
     def __init__(self):
@@ -110,6 +111,73 @@ class Bear(Character):
             enemy.receive_damage(3*self.power)
             print("The Bear 3x Critical Hit!!")
 
+
+# class Item:
+#     def __init__(self):
+#         price = 5
+#         name = "Item"
+#         description = "this is an item"
+#     def use(self):
+#         print("You use an item")
+
+# class SuperTonic(Item):
+# # ?????????????????????
+#     hero.health + 10
+#     print("the Hero feels rejuvinated!")
+#     pass
+
+# class Armor(Item):
+# # ?????????????????
+#     enemy.power - 2
+#     print("The Hero feels tougher!")
+#     pass
+
+# class EvadePotion(Item):
+# # ?????????????????
+#     print("The Hero feels faster!")
+#     pass
+
+# class Axe(Item):
+# # ??????????????????
+#     hero.power + 2
+#     print("The Hero upgraded their weapon!")
+#     pass
+
+# class SwapPotion(Item):
+#     print("The Hero turned the tables!")
+# # ???????????????
+#     pass
+
+# def store(hero):
+
+#     print("=======================")
+#     print("The Amazing Hero Store!")
+#     print("=======================")
+#     print("You have %d coins!" % hero.coins)
+#     print("What heroic items would you like?")
+#     print("1. Super Tonic (+10 Health) = 10 coins")
+#     print("2. Armor (+2 Armor) = 10 coins" )
+#     print("3. Evade Potion (+2 Evade) = 10 coins")
+#     print("4. Axe (+2 Power) = 10 coins")
+#     print("5. Swap Potion (Switch stats with enemies) = 10 coins")
+#     print("6. Leave")
+#     user_input = input()
+#     if user_input == 1:
+        
+#     elif user_input == 2:
+    
+#     elif user_input == 3:
+    
+#     elif user_input == 4:
+    
+#     elif user_input == 5:
+
+#     elif user_input == 6:
+#         print("Bye!")
+
+
+
+
 def fight(hero, enemy):
     while enemy.is_alive() and hero.is_alive():
         hero.print_status()
@@ -140,76 +208,44 @@ def fight(hero, enemy):
         if not hero.is_alive():
             print("The %s is dead!" % hero.name)
 
-class Item:
-    __init__:
-        price = 5
-        name = "Item"
-        description = "this is an item"
-    def use:
-        print("You use an item")
-
-class SuperTonic(Item):
-# ?????????????????????
-    hero.health + 10
-    print("the Hero feels rejuvinated!")
-    pass
-
-class Armor(Item):
-# ?????????????????
-    enemy.power - 2
-    print("The Hero feels tougher!")
-    pass
-
-class EvadePotion(Item):
-# ?????????????????
-    print("The Hero feels faster!")
-    pass
-
-class Axe(Item):
-# ??????????????????
-    hero.power + 2
-    print("The Hero upgraded their weapon!")
-    pass
-
-class SwapPotion(Item):
-    print("The Hero turned the tables!")
-# ???????????????
-    pass
-
-def Store(hero):
-    superTonic = SuperTonic()
-    armor = Armor()
-    evadePotion = EvadePotion()
-    axe = Axe()
-    swapPotion = SwapPotion()
-
-    stock = [superTonic, armor, evadePotion, axe, swapPotion]
-
-    print("=======================")
-    print("The Amazing Hero Store!")
-    print("=======================")
-    print("You have %d coins!" % hero.coins)
-    print("What heroic items would you like?")
-    print("1. Super Tonic = 10 coins")
-    print("2. Armor = 10 coins" )
-    print("3. Evade Potion = 10 coins")
-    print("4. Axe = 10 coins")
-    print("5. Swap Potion = 10 coins")
-    print("6. Leave")
-# How to leaf? Return to battle?
-
-hero = Hero()
-goblin = Goblin()
-medic = Medic()
-shadow = Shadow()
-zombie = Zombie()
-wizard = Wizard()
-bear = Bear()
 
 
-fight(hero, goblin)
-fight(hero, medic)
-fight(hero, shadow)
-fight(hero, zombie)
-fight(hero, wizard)
-fight(hero, bear)
+def main_menu():
+    hero = Hero()
+    while hero.is_alive:
+        print("Where would you like to go, Hero?")
+        print("1. Go to the Hero Store!")
+        print("2. Fight monsters!")
+        print("3. Quit")
+        user_input = input()
+        if user_input == "1":
+            store(hero)
+        elif user_input == "2":
+            rint = random.randint(1, 6)
+            if rint == 1:
+                goblin = Goblin()
+                fight(hero, goblin)
+            elif rint == 2:
+                medic = Medic()
+                fight(hero, medic)
+            elif rint == 3:
+                zombie = Zombie()
+                fight(hero, zombie)
+            elif rint == 4:
+                wizard = Wizard()
+                fight(hero, wizard)
+            elif rint == 5:
+                bear = Bear()
+                fight(hero, bear)
+            elif rint == 6:
+                shadow = Shadow()
+                fight(hero, shadow)
+        elif user_input == "3":
+            print("See ya!")
+            break
+        else:
+            print("Invalid input %r" % user_input)
+
+
+
+main_menu()
