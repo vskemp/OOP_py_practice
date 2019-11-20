@@ -1,11 +1,14 @@
 import random
 
 class Character(object):
-    def __init__(self, name, health, power, coins):
+    def __init__(self, name, health, power, coins, armor, evade, inventory):
         self.name = name
         self.health = health
         self.power = power
         self.coins = coins
+        self.armor = armor
+        self.evade = evade
+        self.inventory = inventory
 
     def is_alive(self):
         return self.health > 0
@@ -30,9 +33,9 @@ class Character(object):
     def receive_damage(self, enemy_power):
         self.health -= enemy_power
 
-    # def buy(self, item): ???????????/
-    #     self.coins -= item.cost
-    #     item.apply(hero)
+    def buy(self, hero, item, price):
+        self.coins -= price
+        price(hero.inventory)
 
 class Hero(Character):
     def __init__(self):
@@ -40,6 +43,8 @@ class Hero(Character):
         self.health = 10
         self.power = 5
         self.coins = 25
+        self.armor = 0
+        self.evade = 0
         self.inventory = []
 
 class Goblin(Character):
@@ -70,7 +75,7 @@ class Medic(Character):
         rint = random.randint(1, 5) 
         if rint==1:
             self.health += 2
-            print("The Medic Heals +2!")
+            print("The Medic Heals +2 Health!")
 
 
 class Shadow(Character):
@@ -98,8 +103,7 @@ class Wizard(Character):
         if rint ==1:
             self.health -= enemy_power
         else:
-            print("The Wizard Used Shield!!")
-            
+            print("The Wizard Used Magic Shield!!")
 
 class Bear(Character):
     def __init__(self):
@@ -108,10 +112,10 @@ class Bear(Character):
         self.power = 2
         self.coins = 8
     def attack(self, enemy):
-        rint = random.randint(1, 10) 
+        rint = random.randint(1, 2) 
         if rint==1:
-            enemy.receive_damage(3*self.power)
-            print("The Bear 3x Critical Hit!!")
+            enemy.receive_damage(2*self.power)
+            print("The Bear Critical Hits!!")
 
 
 class Item:
@@ -120,39 +124,52 @@ class Item:
         self.name = "Item"
         self.description = "this is an item"
     def use(self, hero, enemy):
-        print("You use an item")
+        print("You use an item!")
 
 class SuperTonic(Item):
-# ?????????????????????
     def __init__(self):
         self.name = "Super Tonic"
         self.description = "adds 10 health to your hero"
+        self.price = 10
     def use(self, hero, enemy):
-        print("You gain 10 health")
+        print("You gain +10 health!")
         hero.health +=10
 
 class Armor(Item):
-# ?????????????????
-    def use(self):
-        print("You use an item")
+    def __init__(self):
+        self.name = "Armor"
+        self.description = "adds +2 Armor"
+        self.price = 10
+    def use(self, hero, enermy):
+        print("You gained 2+ armor!")
+        hero.armor += 2
 
 class EvadePotion(Item):
-# ?????????????????
-    def use(self):
+    def __init__(self):
+        self.name = "Evade Potion"
+        self.description = "You gain +2 Evade"
+        self.price = 10
+    def use(self, hero, enemy):
         print("You use an item")
 
 class Axe(Item):
-# ??????????????????
     def __init__(self):
         self.name = "Axe"
         self.description = "adds 2 attack to your hero"
+        self.price = 10
     def use(self, hero, enemy):
         print("You gain 2 attack")
         hero.attack +=2
 
 class SwapPotion(Item):
-    def use(self):
-        print("You use an item")
+    def __init__(self):
+        self.name = "Swap Potion"
+        self.descritption = "swaps health with enemy"
+        self.price = 10
+    def use(self, hero, enemy):
+        print("You use Swap Potion")
+        hero.health = enemy.health
+        enemy.health = hero.health
 
 def store(hero):
 
@@ -161,33 +178,50 @@ def store(hero):
     print("=======================")
     print("You have %d coins!" % hero.coins)
     print("What heroic items would you like?")
-    print("1. Super Tonic (+10 Health) = 10 coins")
+    print("1. Super Tonic (+Restores Health) = 10 coins")
     print("2. Armor (+2 Armor) = 10 coins" )
     print("3. Evade Potion (+2 Evade) = 10 coins")
     print("4. Axe (+2 Power) = 10 coins")
-    print("5. Swap Potion (Switch stats with enemies) = 10 coins")
+    print("5. Swap Potion (Switch health with enemies) = 10 coins")
     print("6. Leave")
     user_input = input()
     if user_input == "1":
         if hero.coins >=10:
             superTonic = SuperTonic()
             hero.inventory.append(superTonic)
-        print("buying tonic")
-    # elif user_input == 2:
-    #     if hero.coins >10:
-    # elif user_input == 3:
-    #     if hero.coins >10:
-    # elif user_input == 4:
-    #     if hero.coins >10:
-    # elif user_input == 5:
-    #     if hero.coins >10:
-    elif user_input == 6:
+            hero.coins -= 10
+        print("Buying Super Tonic")
+    elif user_input == "2":
+        if hero.coins >=10:
+            armor = Armor()
+            hero.inventory.append(armor)
+            hero.coins -= 10
+        print("Buying Armor")
+    elif user_input == 3:
+        if hero.coins >=10:
+            evadePotion = EvadePotion()
+            hero.inventory.append(evadePotion)
+            hero.coins -=10
+        print("Buying Evade Potion")
+    elif user_input == 4:
+        if hero.coins >=10:
+            axe = Axe()
+            hero.inventory.append(axe)
+            hero.coins -= 10
+        print("Buying Axe")
+    elif user_input == 5:
+        if hero.coins >=10:
+            swapPotion = SwapPotion()
+            hero.inventory.append(swapPotion)
+            hero.coins -= 10
+        print("Buying Swap Potion")
+        main_menu()
         print("Bye!")
 
 
 def useItem(hero,enemy):
     print("Which item would you like to use?")
-    item_position = 1
+    item_position = [1]
     for item in hero.inventory:
         print("%s: %s" % (item_position, item.name))
 
@@ -201,8 +235,6 @@ def fight(hero, enemy):
         print("2. Take the hit!")
         print("3. Use an item!")
         print("4. Run away!")
-        # Add a Go To Store option?
-        # Add a Use Item option?
         print("=============================================")
         user_input = input()
         if user_input == "1":
