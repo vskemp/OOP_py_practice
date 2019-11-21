@@ -1,0 +1,31 @@
+html{
+    /* background-image: url(../images/adventure-alpine-altitude-austria-355241\ \(1\).jpg);
+    background-repeat: no-repeat;
+    background-size: cover; */
+}
+
+
+
+*{
+    /*color: red;
+    /* color: rgb(0, 0, 0); 
+    alpha channel controls how opaque the color is*/
+    /* color: rgba(0, 0, 0, 0.4); */
+    /*background: red;
+    /*background: #ffffff*/
+
+}
+
+p{
+    color: #5d5d5d;
+}
+
+table {
+    width:100%;
+
+}
+
+th{
+    background-color: #4285f4;
+    color: #fff;
+}
